@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { ITodoItem } from './App'
+import { ITodoItem } from '../App'
 
 const TodoForm = ({setTodoList}: {
   setTodoList: React.Dispatch<React.SetStateAction<ITodoItem[]>>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { ITodoItem } from './App'
+import { ITodoItem } from '../App'
 import TodoItem from './TodoItem'
 
 const TodoList = ({todoList, EditTodos, setTodoList}:{

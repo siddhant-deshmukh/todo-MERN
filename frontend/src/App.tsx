@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react'
-import TodoForm from './TodoForm'
-import TodoList from './TodoList'
+import { useCallback, useEffect, useState } from 'react'
+import TodoForm from './components/TodoForm'
+import TodoList from './components/TodoList'
 
 export interface ITodoItem {  
   title:string,
@@ -9,11 +9,20 @@ export interface ITodoItem {
   status:boolean
   time:Date,
 }
+export interface IUser {  
+  name: string,
+}
 
 function App() {
 
   const [todoList, setTodoList] = useState<ITodoItem[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [user, setUser] = useState<IUser | null>(null)
 
+  useEffect(()=>{
+
+  },[])
+  
   const EditTodos = useCallback((index : number,newTodo : ITodoItem)=>{
     console.log(index,newTodo)
     if(index >= 0 && newTodo.title.length > 0){
