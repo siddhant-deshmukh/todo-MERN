@@ -20,7 +20,7 @@ const TodoForm = () => {
       }, { withCredentials: true }).then(({ data, status }) => {
         console.log('new todo', data.data, status)
         setTodoList((prev) => {
-          let new_: ITodoItem[] = [{ title: newTodo, time: Date(), status: false }]
+          let new_: ITodoItem[] = [{ title: newTodo, time: Date(), status: false, _id : data.data. }]
           return new_.concat([...prev])
         })
         setNewTodo('')
