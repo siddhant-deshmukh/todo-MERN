@@ -1,6 +1,6 @@
 # Todo List
 
-![]('Demo/todo-MERN.gif')
+![](Demo/todo-MERN.gif)
 
 * This is MERN stack based CRUD application.
 * Have password based **authentication**
