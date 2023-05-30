@@ -5,7 +5,7 @@ export interface ITodoStored {
   desc? : string,
   author : Types.ObjectId,
   status : boolean,
-  date : Date
+  time : Date
 }
 
 const todoSchema = new mongoose.Schema<ITodoStored>({
@@ -13,7 +13,7 @@ const todoSchema = new mongoose.Schema<ITodoStored>({
   desc : {type: String, maxlength: 200},
   author: {type: mongoose.SchemaTypes.ObjectId, required: true, index : true},
   status: {type: Boolean, default: false },
-  date : {type: Date, default: new Date()}
+  time : {type: Date, default: new Date()}
 })
 
 const Todo = mongoose.model<ITodoStored>("Todos", todoSchema);

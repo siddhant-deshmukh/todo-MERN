@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { ITodoItem } from '../App'
 import TodoItem from './TodoItem'
+import axios from 'axios'
 
-const TodoList = ({todoList, EditTodos, setTodoList}:{
+const TodoList = ({todoList,  setTodoList}:{
   todoList: ITodoItem[]
-  EditTodos: (index: number, newTodo: ITodoItem) => void,
   setTodoList: React.Dispatch<React.SetStateAction<ITodoItem[]>>
 }) => {
+
+  useEffect(()=>{
+    axios.get(`${import.meta.env.VITE_API_URL}/todos`)
+      .then((data)=>{
+        console.log(data.data)
+        setTodoList(data.data)
+      })
+      .catch(()=>{
+
+      })
+  },[])
+  
   return (
     <div className='w-full flex flex-col border-2 border-gray-300  rounded-xl p-7  space-y-5'>
       <h1 className='text-3xl'>
@@ -15,7 +27,7 @@ const TodoList = ({todoList, EditTodos, setTodoList}:{
       {
         todoList.map((todoItem,index)=>{
           return <div key={index}>
-            <TodoItem todoItem={todoItem} EditTodos={EditTodos} index={index} setTodoList={setTodoList}/>
+            <TodoItem todoItem={todoItem} index={index} setTodoList={setTodoList}/>
           </div>
         })
       }

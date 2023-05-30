@@ -37,7 +37,7 @@ router.post('/register',
       
       const token = jwt.sign({_id:newUser._id.toString(),email},process.env.TOKEN_KEY || 'zhingalala',{expiresIn:'2h'})
       res.cookie("GoogleFormClone_acesstoken",token)
-      return res.status(201).json({token})
+      return res.status(201).json({token, user : newUser})
     } catch (err) {
       return res.status(500).json({msg : 'Some internal error occured',err})
     }
@@ -54,7 +54,7 @@ router.post('/login-password',
 
     const token = jwt.sign({_id:checkUser._id.toString(),email},process.env.TOKEN_KEY || 'zhingalala',{expiresIn:'2h'})
     res.cookie("GoogleFormClone_acesstoken",token)
-    return res.status(201).json({token})
+    return res.status(201).json({token, user : checkUser})
   }
 );
 router.post('/login-google', 
