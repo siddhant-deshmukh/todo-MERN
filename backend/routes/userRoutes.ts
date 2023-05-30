@@ -98,8 +98,7 @@ router.post('/login-google',
         const newUser : IUserCreate = {
           email,
           name,
-          emailVerfied,
-          
+          emailVerfied, 
         }
         const newUserCreated : IUserStored = await User.create(newUser)
         

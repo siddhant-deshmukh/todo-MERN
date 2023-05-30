@@ -1,7 +1,7 @@
-import React, { useContext, useState } from 'react'
-import { ITodoItem } from '../types'
 import axios from 'axios'
+import { ITodoItem } from '../types'
 import AppContext from '../AppContext'
+import  { useContext, useState } from 'react'
 
 const TodoItem = ({ index, todoItem }: {
   index: number,
@@ -13,9 +13,8 @@ const TodoItem = ({ index, todoItem }: {
   const [loading, setLoading] = useState<boolean>(false)
   const [editAble, setEditable] = useState<boolean>(false)
 
-  const EditTodos = (index: number, newTodo: ITodoItem) => {
+  function EditTodos(newTodo: ITodoItem){
     if (loading) return
-    console.log(index, newTodo)
     if (user) {
       setLoading(true)
       axios.put(
@@ -40,7 +39,7 @@ const TodoItem = ({ index, todoItem }: {
     }
   }
 
-  const DeleteTodo = () => {
+  function DeleteTodo() {
     if (loading) return
     if (user) {
       setLoading(true)
@@ -82,14 +81,18 @@ const TodoItem = ({ index, todoItem }: {
           <h2>Added: {relativeTime(todoItem.time)}</h2>
         </div>
         
-        {!editAble && ( !user || !todoItem.author || (user._id === todoItem.author ) ) &&
+        { 
+        // If the user is the author or in unauthenticated mode 
+        // user can perform changes in todo like changing status, editing todo, deleting todo
+        !editAble && ( !user || !todoItem.author || (user._id === todoItem.author ) ) &&
           <div className='flex border-2 mt-auto w-fit '>
+            {/* Change Status Button (task completed / not) */}
             <button
               disabled={loading}
               className='px-2.5 py-1.5 group hover:bg-slate-100'
               onClick={(event) => {
                 event.preventDefault();
-                EditTodos(index, { ...todoItem, status: !todoItem.status })
+                EditTodos({ ...todoItem, status: !todoItem.status })
               }}>
               <div className={`rounded-full p-1 ${todoItem.status ? 'bg-green-500' : 'bg-gray-500'} `}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="white" className="w-5 h-5 ">
@@ -97,6 +100,7 @@ const TodoItem = ({ index, todoItem }: {
                 </svg>
               </div>
             </button>
+            {/* Change todo this will made todo editable */}
             <button
               disabled={loading}
               className='border-x-2 px-2.5 py-1.5 hover:bg-slate-100'
@@ -108,6 +112,7 @@ const TodoItem = ({ index, todoItem }: {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
               </svg>
             </button>
+            {/* Delete the todo */}
             <button
               disabled={loading}
               className='px-2.5 py-1.5 hover:bg-slate-100'
@@ -121,6 +126,7 @@ const TodoItem = ({ index, todoItem }: {
             </button>
           </div>
         }
+        {/* If todo is editable the uploading changes to the server */}
         {
           editAble && ( !user || !todoItem.author || (user._id === todoItem.author ) ) &&
           <button
@@ -128,7 +134,7 @@ const TodoItem = ({ index, todoItem }: {
             className='flex mt-auto min-w-fit bg-green-600 p-1.5 font-bold  text-gray-100 '
             onClick={() => {
               setEditable(false)
-              EditTodos(index, { ...todoItem, title: editTitle })
+              EditTodos({ ...todoItem, title: editTitle })
             }}>
             Save Changes
           </button>

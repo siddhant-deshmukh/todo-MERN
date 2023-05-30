@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react'
-import { ITodoItem } from '../types'
+import { useContext, useEffect } from 'react'
 import TodoItem from './TodoItem'
 import axios from 'axios'
 import AppContext from '../AppContext'
@@ -30,7 +29,7 @@ const TodoList = () => {
       </h1>
       {
         todoList.map((todoItem, index) => {
-          return <div key={index}>
+          return <div key={todoItem._id}>
             <TodoItem todoItem={todoItem} index={index} />
           </div>
         })
