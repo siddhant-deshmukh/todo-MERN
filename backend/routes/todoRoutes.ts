@@ -18,13 +18,14 @@ router.get('/todos', async (req, res) => {
 router.post('/todos', auth, async (req, res) => {
   try {
     const { title, desc } = req.body
-    if (!(typeof title === 'string' && title.length > 0 && title.length <= 50 )) {
+    if (!(typeof title === 'string' && title.length > 0 && title.length <= 100 )) {
       return res.status(400).json({ msg: 'incorrect values' })
     }
-
+    // console.log(res.user)
     const todos = await Todo.create({
       title,
       desc,
+      authorName: res.user.name,
       author: res.user._id,
       date: new Date(),
     })

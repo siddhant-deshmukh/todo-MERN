@@ -1,21 +1,24 @@
-import React, { useState } from 'react'
-import { ITodoItem } from '../App'
+import { useContext, useState } from 'react'
+import { ITodoItem } from '../types'
 import axios from 'axios'
+import AppContext from '../AppContext'
 
-const TodoForm = ({ setTodoList }: {
-  setTodoList: React.Dispatch<React.SetStateAction<ITodoItem[]>>
-}) => {
+const TodoForm = () => {
+
+  const { setTodoList, user } = useContext(AppContext)
   const [newTodo, setNewTodo] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
   function AddTodo() {
     console.log('Addtodo')
-    if (newTodo.length > 0) {
+    if (newTodo.length < 1 || newTodo.length > 100) return
+
+    if (user) {
       setLoading(true)
       axios.post(`${import.meta.env.VITE_API_URL}/todos`, {
         title: newTodo,
-      }, {withCredentials : true}).then(({data, status}) => {
-        console.log('new todo',data.data,status)
+      }, { withCredentials: true }).then(({ data, status }) => {
+        console.log('new todo', data.data, status)
         setTodoList((prev) => {
           let new_: ITodoItem[] = [{ title: newTodo, time: Date(), status: false }]
           return new_.concat([...prev])
@@ -24,7 +27,14 @@ const TodoForm = ({ setTodoList }: {
       }).finally(() => {
         setLoading(false)
       })
+    } else {
+      setTodoList((prev) => {
+        let new_: ITodoItem[] = [{ title: newTodo, time: Date(), status: false }]
+        return [...prev].concat(new_)
+      })
+      setNewTodo('')
     }
+
   }
 
   return (
@@ -32,6 +42,8 @@ const TodoForm = ({ setTodoList }: {
       <input
         value={newTodo}
         onChange={(event) => { setNewTodo(event.target.value) }}
+        minLength={1}
+        maxLength={100}
         className='w-full border-2 px-3 py-5 outline-none  text-xl' placeholder='Enter a todo' />
       <button
         className='w-[60px] h-[60px] bg-[#3f51b5] p-2'

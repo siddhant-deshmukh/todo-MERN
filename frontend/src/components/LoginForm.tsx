@@ -1,11 +1,13 @@
 import axios from 'axios'
-import React, { useRef, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
+import AppContext from '../AppContext'
 
 const LoginForm = ({ authToggle, setAuthToggle }: {
   authToggle: boolean,
   setAuthToggle: React.Dispatch<React.SetStateAction<boolean>>
 }) => {
 
+  const { user, setUser } = useContext(AppContext)
   const [errMsg, setErrMsg] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [formType, setFormType] = useState<'login' | 'register'>('register')
@@ -44,6 +46,9 @@ const LoginForm = ({ authToggle, setAuthToggle }: {
       { withCredentials: true }
     ).then((data) => {
       console.log(data)
+      if(data.data.user){
+        setUser(data.data.user)
+      }
     }).catch((err)=>{
       if(err.message){
         setErrMsg(err.message)

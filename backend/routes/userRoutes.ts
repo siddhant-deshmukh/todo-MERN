@@ -24,6 +24,11 @@ router.post('/register',
   async function(req : Request, res : Response, next : NextFunction) {
     try{
       const {email,name,password} : {email:string,name:string,password:string}  = req.body;
+
+      if(name.length < 3 || name.length > 50 || email.length < 3 || email.length > 50 || password.length < 3 || password.length > 50){
+        res.status(400).json({msg : 'incorrect values'})
+      }
+
       const checkEmail = await User.findOne({email});
       if(checkEmail) return res.status(409).json({msg:'User already exists!'});
 

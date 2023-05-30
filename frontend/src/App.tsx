@@ -1,26 +1,13 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import TodoForm from './components/TodoForm'
 import TodoList from './components/TodoList'
 import axios from 'axios'
 import LoginForm from './components/LoginForm'
-
-export interface ITodoItem {
-  _id?: string,
-  title: string,
-  desc?: string,
-  author?: string,
-  status: boolean
-  time: string,
-}
-export interface IUser {
-  name: string,
-}
+import AppContext from './AppContext'
 
 function App() {
 
-  const [user, setUser] = useState<IUser | null>(null)
-  const [todoList, setTodoList] = useState<ITodoItem[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const { user, setUser, authLoading, setAuthLoading } = useContext(AppContext)
   const [authToggle, setAuthToggle] = useState<boolean>(false)
 
   useEffect(() => {
@@ -31,12 +18,12 @@ function App() {
         setUser(data.data.user)
       }
     }).finally(() => {
-      setIsLoading(false)
+      setAuthLoading(false)
     })
   }, [])
 
 
-  if (isLoading) {
+  if (authLoading) {
     return (
       <div className='w-full h-screen flex items-center'>
         <div role="status" className='mx-auto min-w-fit'>
@@ -72,8 +59,8 @@ function App() {
           </button>
         </nav>
         <main className='flex flex-col max-w-2xl w-full pt-5 items-center space-y-10 mx-auto'>
-          <TodoForm setTodoList={setTodoList} />
-          <TodoList todoList={todoList} setTodoList={setTodoList} />
+          <TodoForm />
+          <TodoList />
         </main>
       </div>
     )
@@ -90,8 +77,8 @@ function App() {
         </button>
       </nav>
       <main className='flex flex-col max-w-2xl w-full pt-5 items-center space-y-10 mx-auto'>
-        <TodoForm setTodoList={setTodoList} />
-        <TodoList todoList={todoList} setTodoList={setTodoList} />
+        <TodoForm  />
+        <TodoList />
       </main>
     </div>
   )

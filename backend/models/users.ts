@@ -19,12 +19,12 @@ export interface IUserStored extends IUserSnippet {
   emailVerfied: boolean,
   email: string,
   password?: string,
-}
+} 
 
 const userSchema = new mongoose.Schema<IUserStored>({
   name: { type: String, required: true, maxLength: 50, minlength: 3 },
   email: { type: String, unique: true, maxLength: 50, minlength: 3 },
-  password: { type: String, maxLength: 100, minlength: 5 },
+  password: { type: String, maxLength: 50, minlength: 5 },
   emailVerfied: { type: Boolean, default: false }
 })
 
