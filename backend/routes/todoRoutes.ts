@@ -3,15 +3,17 @@ var router = express.Router();
 import dotenv from 'dotenv';
 import Todo from '../models/todo';
 import auth from '../auth'
+// auth is middleware which validates the token and passon the information of user by decrypting token
+
 
 dotenv.config();
 
 router.get('/todos', async (req, res) => {
   try {
     const todos = await Todo.find({})
-    return res.status(201).json(todos)
+    return res.status(200).json(todos)
   } catch (err) {
-    return res.status(501).json({ msg: "some eror occured!" })
+    return res.status(500).json({ msg: "some eror occured!" })
   }
 })
 
@@ -31,22 +33,22 @@ router.post('/todos', auth, async (req, res) => {
     })
     return res.status(201).json({todo : todos})
   } catch (err) {
-    return res.status(501).json({ msg: "some eror occured!" })
+    return res.status(500).json({ msg: "some eror occured!" })
   }
 })
 
 router.put('/todos/:id', auth, async (req, res) => {
   try {
     const todo_id = req.params.id
-    console.log(todo_id, req.params)
     const { title, desc, status } = req.body
 
     if (!todo_id || !title || typeof status !== 'boolean') {
-      return res.status(400).json({ msg: 'id required' })
+      return res.status(400).json({ msg: 'bad request!' })
     }
+
     const check_todo = await Todo.findById(todo_id)
     if (!check_todo){
-      return res.status(403).json({ msg: 'todo not found' })
+      return res.status(404).json({ msg: 'todo not found' })
     }
     if (!(check_todo.author.toString() === res.user._id.toString())){
       return res.status(401).json({ msg: 'permission denied' })
@@ -55,9 +57,10 @@ router.put('/todos/:id', auth, async (req, res) => {
     await Todo.findByIdAndUpdate(todo_id ,{
       title, desc, status
     })
-    return res.status(201).json({msg : "Successful!"})
+
+    return res.status(200).json({msg : "Successful!"})
   } catch (err) {
-    return res.status(501).json({ msg: "some eror occured!" })
+    return res.status(500).json({ msg: "some eror occured!" })
   }
 })
 
@@ -67,9 +70,10 @@ router.delete('/todos/:id', auth, async (req, res) => {
     if (!todo_id) {
       return res.status(400).json({ msg: 'id required' })
     }
+    
     const check_todo = await Todo.findById(todo_id)
     if (!check_todo){
-      return res.status(403).json({ msg: 'todo not found' })
+      return res.status(404).json({ msg: 'todo not found' })
     }
     if (!(check_todo.author.toString() === res.user._id.toString())){
       return res.status(401).json({ msg: 'permission denied' })
@@ -77,9 +81,9 @@ router.delete('/todos/:id', auth, async (req, res) => {
 
     await Todo.findByIdAndDelete(todo_id)
 
-    return res.status(201).json({msg : "Successful!"})
+    return res.status(200).json({msg : "Successful!"})
   } catch (err) {
-    return res.status(501).json({ msg: "some eror occured!" })
+    return res.status(500).json({ msg: "some eror occured!" })
   }
 })
 

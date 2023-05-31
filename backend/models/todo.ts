@@ -12,7 +12,7 @@ export interface ITodoStored {
 const todoSchema = new mongoose.Schema<ITodoStored>({
   title: { type: String, required: true, maxlength: 100, minlength: 1 },
   desc : {type: String, maxlength: 200},
-  author: {type: mongoose.SchemaTypes.ObjectId, required: true, index : true},
+  author: {type: mongoose.SchemaTypes.ObjectId, required: true, index : true},  // indexing because might use later to get user specific todos
   authorName : {type: String, required : true},
   status: {type: Boolean, default: false },
   time : {type: Date, default: new Date()}

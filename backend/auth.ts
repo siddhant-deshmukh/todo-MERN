@@ -4,9 +4,9 @@ import User from './models/users';
 
 const verifyToken = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const token = req.cookies.GoogleFormClone_acesstoken;
+    const token = req.cookies.access_token;
 
-    // console.log("req.cookies.access_token",req.cookies.GoogleFormClone_acesstoken,process.env.TOKEN_KEY || 'zhingalala');
+    // console.log("req.cookies.access_token",req.cookies.access_token,process.env.TOKEN_KEY || 'zhingalala');
     // console.log("Coming")
     if (!token) {
       return res.status(401).json({ err: "Not authorized!", user:null });
