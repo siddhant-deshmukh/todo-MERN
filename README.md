@@ -6,7 +6,6 @@
 * Have password based **authentication**
   * Uses **jsonwebtoken** for autherization and session 
   * uses bcrypt js for password encryption
-  * ![](Demo/todo-authentication.gif)
 * Build using **Vite** ,**TypeScript** and styled using **Tailwindcss**. 
 * have also written some testcases using **Jest**
 * Apps work in both online and offline mode.
@@ -33,3 +32,10 @@
    yarn install
    ```
 
+## To run 
+* by using concurrently can run both backend and frontend simultaneously with single command
+
+   ```
+   cd backend
+   yarn run both
+   ```

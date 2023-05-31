@@ -110,6 +110,7 @@ const LoginForm = ({ authToggle, setAuthToggle }: {
 
         <button
           type="submit"
+          disabled={loading}
           onClick={(event) => {
             event.preventDefault();
             Authenticate()

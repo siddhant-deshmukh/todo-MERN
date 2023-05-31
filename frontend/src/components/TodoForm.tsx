@@ -18,9 +18,9 @@ const TodoForm = () => {
       axios.post(`${import.meta.env.VITE_API_URL}/todos`, {
         title: newTodo,
       }, { withCredentials: true }).then(({ data, status }) => {
-        console.log('new todo', data.data, status)
+        console.log('new todo', data?.data?.todo?._id, data.data, status)
         setTodoList((prev) => {
-          let new_: ITodoItem[] = [{ title: newTodo, time: Date(), status: false, _id : data.data. }]
+          let new_: ITodoItem[] = [{ title: newTodo, time: Date(), status: false, _id : data?.data?.todo?._id  }]
           return new_.concat([...prev])
         })
         setNewTodo('')
