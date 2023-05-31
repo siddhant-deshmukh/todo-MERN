@@ -1,0 +1,235 @@
+{
+	"info": {
+		"_postman_id": "a2b1686b-3282-43bb-a55a-3a3d794db4c9",
+		"name": "todo-MERN",
+		"description": "- Github repo : [https://github.com/siddhant-deshmukh/todo-MERN/tree/master/backend](https://github.com/siddhant-deshmukh/todo-MERN/tree/master/backendDeployed)\n- [Deployed](https://github.com/siddhant-deshmukh/todo-MERN/tree/master/backendDeployed) at [https://railway.app/template/Abo1zu](https://railway.app/template/Abo1zuDeplyed)\n- [Deployed Link](https://todo-production-mern.up.railway.app) : [https://todo-production-mern.up.railway.app](https://todo-production-mern.up.railway.appA)\n    \n\n[A](https://todo-production-mern.up.railway.appA) basic MERN stack application.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26652694"
+	},
+	"item": [
+		{
+			"name": "Todos",
+			"item": [
+				{
+					"name": "todos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://todo-production-mern.up.railway.app/todos",
+							"protocol": "https",
+							"host": [
+								"todo-production-mern",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"todos"
+							]
+						},
+						"description": "- To get list of all todos (todos of all user) available in the database.\n- No **Autherization**. Any one can access this call."
+					},
+					"response": []
+				},
+				{
+					"name": "todos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"A latest todo! just created!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://todo-production-mern.up.railway.app/todos",
+							"protocol": "https",
+							"host": [
+								"todo-production-mern",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"todos"
+							]
+						},
+						"description": "- To add a todo in todos.\n- Required **authentication**\n- A cookie with access_token required to access this api.\n- The user extracted from the access_token will be written as author of the todo\n- The Length of title should between 1 to 100\n- Todo object has\n    - title\n    - author : mongodb object _id of user/ author\n    - authorName : name of author\n    - status : status of task (true or false) (completed or not)\n    - time : time at which created\n- Only title can be written at the time of creating the todo other are added automatically."
+					},
+					"response": []
+				},
+				{
+					"name": "todos",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"title\" : \"Just update!\",\n    \"status\" : true\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://todo-production-mern.up.railway.app/todos/:id",
+							"protocol": "https",
+							"host": [
+								"todo-production-mern",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"todos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "647759f86ca8d893790e6186"
+								}
+							]
+						},
+						"description": "- To edit a todo in todos.\n- Required **authentication.**\n- A cookie with access_token required to access this api.\n- Editing will be allowed only if the user is author of the todo\n- the **':id'** must be a **valid object id** so create the new request todo first and then try to change or delete it."
+					},
+					"response": []
+				},
+				{
+					"name": "todos",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://todo-production-mern.up.railway.app/todos/:id",
+							"protocol": "https",
+							"host": [
+								"todo-production-mern",
+								"up",
+								"railway",
+								"app"
+							],
+							"path": [
+								"todos",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "647759f86ca8d893790e6186"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://todo-production-mern.up.railway.app/u",
+					"protocol": "https",
+					"host": [
+						"todo-production-mern",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"u"
+					]
+				},
+				"description": "- This will take the access_token from cookie and send user detail\n- Require access_token"
+			},
+			"response": []
+		},
+		{
+			"name": "login-password",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"email\":\"meow@meow.com\",\n  \"password\":\"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://todo-production-mern.up.railway.app/u/login-password",
+					"protocol": "https",
+					"host": [
+						"todo-production-mern",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"u",
+						"login-password"
+					]
+				},
+				"description": "- to login with password\n- will get access_token if password and email are correct"
+			},
+			"response": []
+		},
+		{
+			"name": "register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"name\" :\"Meow\",\n  \"email\":\"meow@meow.com\",\n  \"password\":\"password\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://todo-production-mern.up.railway.app/u/register",
+					"protocol": "https",
+					"host": [
+						"todo-production-mern",
+						"up",
+						"railway",
+						"app"
+					],
+					"path": [
+						"u",
+						"register"
+					]
+				},
+				"description": "- to register a user into the database\n- name must be atleast 3 and atmost 50 character long\n- password must be atleast 5 and atmost 50 character long"
+			},
+			"response": []
+		}
+	]
+}
